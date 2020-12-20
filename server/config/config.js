@@ -7,10 +7,23 @@
 process.env.PORT = process.env.PORT || 3000   ;
 
 //================================
-// Puerto
+// Environment
 //================================
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+
+//================================
+// Vencimiento Token
+//================================
+process.env.CADUCIDAD_TOKEN = '1d';
+
+
+
+//================================
+// SEED de autenticacion
+//================================
+process.env.SEED = process.env.SEED || 'este-es-el-seed-desarrollo';
+
 
 
 //================================

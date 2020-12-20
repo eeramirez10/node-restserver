@@ -5,13 +5,17 @@ const _ = require('underscore');
 const usuario = require('../models/usuario');
 const app = express.Router()
 
-app.get('/usuario', (req, res) => {
+const { verificaToken, verificaAdmin_Role} = require('../middlewares/autenticacion')
+
+app.get('/usuario', [verificaToken], (req, res) => {
+
+    
 
     let desde = parseInt(req.query.desde) || 0 ;
 
     let limite = parseInt(req.query.limite)  || 5;
 
-    Usuario.find({ estado:true }, 'nombre email rol estado google img ')
+    Usuario.find({ estado:true }, 'nombre email role estado google img ')
         .skip(desde)
         .limit(limite)
         .exec((err,usuarios)=>{
@@ -23,7 +27,7 @@ app.get('/usuario', (req, res) => {
                 })
             }
 
-            Usuario.count({ estado: true }, (err,conteo)=>{
+            Usuario.countDocuments({ estado: true }, (err,conteo)=>{
 
                 res.json({
                     ok: true,
@@ -40,7 +44,7 @@ app.get('/usuario', (req, res) => {
 
 });
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario',[verificaToken, verificaAdmin_Role], (req, res) => {
 
     let body = req.body;
 
@@ -78,7 +82,7 @@ app.post('/usuario', (req, res) => {
 
 });
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id',[verificaToken, verificaAdmin_Role], (req, res) => {
 
     let id = req.params.id;
     
@@ -107,7 +111,7 @@ app.put('/usuario/:id', (req, res) => {
 
 });
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id',[verificaToken, verificaAdmin_Role], (req, res) => {
 
     let id = req.params.id;
 
