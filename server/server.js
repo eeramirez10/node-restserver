@@ -1,6 +1,7 @@
 const config = require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -18,6 +19,10 @@ const mongooseSettings = {
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+
+// habilitar carpeta publi
+
+app.use(express.static( path.join( __dirname, '../public') ));
 
 
 
